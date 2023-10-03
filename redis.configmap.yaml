@@ -4,3 +4,4 @@ metadata:
   name: redis-configmap
   labels:
     app: redis
+  namespace: default

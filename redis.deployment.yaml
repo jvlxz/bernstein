@@ -4,6 +4,7 @@ metadata:
   name: redis-deployment
   labels:
     app: redis
+  namespace: default
 spec:
   replicas: 1
   selector:
@@ -21,6 +22,3 @@ spec:
         ports:
         - containerPort: 6379
           name: redis
-        resources:
-          limits:
-            memory: "256Mi"
