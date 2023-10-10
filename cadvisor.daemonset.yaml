@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: cadvisor
+  namespace: kube-system
+  labels:
+    app: cadvisor
+
+spec:
+  selector:
+    matchLabels:
+      app: cadvisor
+  template:
+    metadata:
+      labels:
+        app: cadvisor
+    spec:
+      restartPolicy: Always
+      tolerations:
+      - key: node-role.kubernetes.io/master
+        operator: Exists
+        effect: NoSchedule
+      containers:
+      - name: cadvisor
+        image: gcr.io/cadvisor/cadvisor:latest
+        volumeMounts:
+        - name: varrun
+          mountPath: /var/run
+          readOnly: true
+        - name: rootfs
+          mountPath: /rootfs
+          readOnly: true
+        - name: docker
+          mountPath: /var/lib/docker
+          readOnly: true
+        - name: sys
+          mountPath: /sys
+          readOnly: true
+        - name: disk
+          mountPath: /dev/disk
+          readOnly: true
+        ports:
+        - containerPort: 8080
+          name: cadvisor
+      volumes:
+      - name: varrun
+        hostPath:
+          path: /var/run
+      - name: rootfs
+        hostPath:
+          path: /
+      - name: docker
+        hostPath:
+          path: /var/lib/docker
+      - name: sys
+        hostPath:
+          path: /sys
+      - name: disk
+        hostPath:
+          path: /dev/disk
