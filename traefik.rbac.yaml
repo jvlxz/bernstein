@@ -1,0 +1,40 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: rbac-traefik
+  namespace: kube-public
+rules:
+  - apiGroups:
+     - ""
+    resources:
+      - "*"
+    verbs:
+      - get
+      - list
+      - watch
+      - create
+      - delete
+      - update
+      - patch
+  - apiGroups:
+      - "networking.k8s.io"
+      - "extensions"
+    resources:
+      - "*"
+    verbs:
+      - get
+      - list
+      - watch
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: rbac-traefik
+subjects:
+- kind: ServiceAccount
+  name: traefik-account
+  namespace: kube-public
+roleRef:
+  kind: ClusterRole
+  name: rbac-traefik
+  apiGroup: rbac.authorization.k8s.io
