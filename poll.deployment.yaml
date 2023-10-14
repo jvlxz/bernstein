@@ -30,12 +30,12 @@ spec:
       containers:
         - name: poll
           image: epitechcontent/t-dop-600-poll:k8s
+          envFrom:
+            - configMapRef:
+                name: redis-configmap
           resources:
             limits:
               memory: "128Mi"
           ports:
             - containerPort: 80
               name: poll
-          env:
-            - name: REDIS_HOST
-              value: redis-service

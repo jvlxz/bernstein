@@ -28,6 +28,5 @@ spec:
               name: postgres-secret
           - configMapRef:
               name: postgres-configmap
-          env:
-            - name: REDIS_HOST
-              value: redis-service
+          - configMapRef:
+              name: redis-configmap
