@@ -35,7 +35,7 @@ spec:
                 name: redis-configmap
           resources:
             limits:
-              memory: "128Mi"
+              memory: "128M"
           ports:
             - containerPort: 80
               name: poll
